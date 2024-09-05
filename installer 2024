@@ -1,0 +1,27 @@
+$folderPath = "C:\Windows\Installer"
+$localAdminGroup = "Administrators"
+$deletedFolderCount = 0
+$cutoffDate = [datetime]::ParseExact("12-30-2023", "MM-dd-yyyy", $null)
+
+# Get the existing ACL for the folder
+$acl = Get-Acl -Path $folderPath
+
+# Add a new access rule granting full control to the local admin group
+$rule = New-Object System.Security.AccessControl.FileSystemAccessRule($localAdminGroup, "FullControl", "ContainerInherit, ObjectInherit", "None", "Allow")
+$acl.AddAccessRule($rule)
+
+# Apply the modified ACL back to the folder
+Set-Acl -Path $folderPath -AclObject $acl
+
+# Get the list of items to delete
+$itemsToDelete = Get-ChildItem -Path $folderPath -Recurse -Force | Where-Object { $_.LastWriteTime -lt $cutoffDate }
+
+# Delete the items
+$itemsToDelete | ForEach-Object {
+    Remove-Item -Path $_.FullName -Recurse -Force
+}
+
+# Count the deleted items
+$deletedFolderCount = $itemsToDelete.Count
+
+Write-Host "Total items deleted: $deletedFolderCount"
