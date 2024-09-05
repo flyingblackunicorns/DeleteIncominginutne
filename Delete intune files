@@ -1,4 +1,4 @@
-PS C:\windows\system32> $folderPath = "C:\Program Files (x86)\Microsoft Intune Management Extension\Content\Incoming"
+$folderPath = "C:\Program Files (x86)\Microsoft Intune Management Extension\Content\Incoming"
 $localAdminGroup = "Administrators"
 $deletedFolderCount = 0
 
@@ -12,8 +12,13 @@ $acl.AddAccessRule($rule)
 # Apply the modified ACL back to the folder
 Set-Acl -Path $folderPath -AclObject $acl
 
-# Delete files and folders within the IMECache directory
-$deletedFolders = Get-ChildItem -Path $folderPath -File -Recurse | Remove-Item -Force
-$deletedFolderCount = $deletedFolders.Count
+# Get the list of items to delete
+$itemsToDelete = Get-ChildItem -Path $folderPath -Recurse
 
-Write-Host "Total folders deleted: $deletedFolderCount"
+# Delete the items
+$itemsToDelete | Remove-Item -Force
+
+# Count the deleted items
+$deletedFolderCount = $itemsToDelete.Count
+
+Write-Host "Total items deleted: $deletedFolderCount"
