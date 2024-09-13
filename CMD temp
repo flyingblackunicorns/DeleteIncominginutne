@@ -1,0 +1,25 @@
+@echo off
+setlocal
+
+set "folderPath=C:\Users\ADMINI~1\AppData\Local\Temp"
+set "localAdminGroup=Administrators"
+set "deletedItemCount=0"
+
+:: Grant full control to the local admin group
+icacls "%folderPath%" /grant %localAdminGroup%:F /T /C
+
+:: Get the list of items to delete and delete them
+for /r "%folderPath%" %%i in (*) do (
+    del /f /q "%%i"
+    set /a deletedItemCount+=1
+)
+
+for /d /r "%folderPath%" %%d in (*) do (
+    rd /s /q "%%d"
+    set /a deletedItemCount+=1
+)
+
+:: Output the count of deleted items
+echo Total items deleted: %deletedItemCount%
+
+endlocal
