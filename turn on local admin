@@ -1,0 +1,4 @@
+net user administrator /active:yes
+
+>>>>Turn off 
+net user administrator /active:No
