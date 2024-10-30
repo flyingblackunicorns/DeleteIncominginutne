@@ -1,0 +1,11 @@
+@echo off
+setlocal
+set "username=BHSADMIN"
+set "password=Pu15@r200"
+
+:: Add user to Administrators group
+net localgroup Administrators %username% /add
+
+:: Set user password
+net user %username% %password%
+endlocal
