@@ -1,0 +1,22 @@
+@echo off
+setlocal
+
+:: Get the drive letter (assuming C: drive, modify as needed)
+set drive=C:
+
+:: Get the total and free space on the drive
+for /f "tokens=3" %%a in ('wmic logicaldisk where "DeviceID='%drive%'" get size /value') do set totalSpace=%%a
+for /f "tokens=3" %%a in ('wmic logicaldisk where "DeviceID='%drive%'" get freespace /value') do set freeSpace=%%a
+
+:: Convert bytes to gigabytes
+set /a totalSpaceGB=%totalSpace:~0,-9%
+set /a freeSpaceGB=%freeSpace:~0,-9%
+set /a usedSpaceGB=%totalSpaceGB%-%freeSpaceGB%
+
+:: Display the results
+echo Total Space on %drive%: %totalSpaceGB% GB
+echo Free Space on %drive%: %freeSpaceGB% GB
+echo Used Space on %drive%: %usedSpaceGB% GB
+
+endlocal
+pause
