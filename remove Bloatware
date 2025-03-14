@@ -1,0 +1,23 @@
+# List of bloatware package names
+$bloatwareApps = @(
+    "*3DViewer*",
+    "*AdobeExpress*",
+    "*Clipchamp*",
+    "*Facebook*",
+    "*HiddenCity*",
+    "*Instagram*",
+    "*Netflix*",
+    "*News*",
+    "*Norton*",
+    "*McAfee*"
+)
+
+# Loop through the list and remove each app
+foreach ($app in $bloatwareApps) {
+    Get-AppxPackage -AllUsers $app | Remove-AppxPackage
+}
+
+# Remove provisioned apps for future users
+foreach ($app in $bloatwareApps) {
+    Get-AppxProvisionedPackage -Online | where DisplayName -like $app | Remove-AppxProvisionedPackage -Online
+}
