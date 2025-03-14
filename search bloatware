@@ -1,0 +1,6 @@
+# Look for bloatware on Windows 
+DISM /Online /Get-ProvisionedAppxPackages | select-string Packagename
+
+
+
+
