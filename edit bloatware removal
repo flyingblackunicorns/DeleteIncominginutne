@@ -1,0 +1,31 @@
+# List of bloatware apps to remove
+$bloatwareApps = @(
+    "Microsoft.3DBuilder",
+    "Microsoft.BingNews",
+    "Microsoft.BingWeather",
+    "Microsoft.GetHelp",
+    "Microsoft.Getstarted",
+    "Microsoft.MicrosoftOfficeHub",
+    "Microsoft.MicrosoftSolitaireCollection",
+    "Microsoft.MixedReality.Portal",
+    "Microsoft.OneConnect",
+    "Microsoft.People",
+    "Microsoft.Print3D",
+    "Microsoft.SkypeApp",
+    "Microsoft.XboxApp",
+    "Microsoft.XboxGameOverlay",
+    "Microsoft.XboxGamingOverlay",
+    "Microsoft.XboxIdentityProvider",
+    "Microsoft.XboxSpeechToTextOverlay",
+    "Microsoft.WindowsFeedbackHub",
+    "Microsoft.WindowsMaps",
+    "Microsoft.WindowsPhone",
+    "Microsoft.WindowsSoundRecorder"
+)
+
+# Remove each bloatware app
+foreach ($app in $bloatwareApps) {
+    Get-AppxPackage -Name $app | Remove-AppxPackage
+}
+
+Write-Output "Bloatware removal completed."
