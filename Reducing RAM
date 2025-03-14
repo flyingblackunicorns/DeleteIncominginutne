@@ -1,0 +1,20 @@
+# Define the threshold for RAM usage (in MB)
+$ramThreshold = 100
+
+# Get the list of processes consuming more than the defined threshold of RAM
+$highRamProcesses = Get-Process | Where-Object { $_.WorkingSet64 / 1MB -gt $ramThreshold }
+
+# Display the processes consuming high RAM
+Write-Output "Processes consuming more than $ramThreshold MB of RAM:"
+$highRamProcesses | Select-Object Name, Id, @{Name="RAM (MB)"; Expression={($_.WorkingSet64 / 1MB)}}
+
+# Prompt user to terminate high RAM processes
+foreach ($process in $highRamProcesses) {
+    $response = Read-Host "Do you want to terminate the process $($process.Name) (ID: $($process.Id))? (Y/N)"
+    if ($response -eq 'Y') {
+        Stop-Process -Id $process.Id -Force
+        Write-Output "Terminated process $($process.Name) (ID: $($process.Id))."
+    }
+}
+
+Write-Output "RAM reduction script completed."
