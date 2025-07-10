@@ -1,7 +1,7 @@
 @echo off
 setlocal
 set "username=Citsadmin"
-set "password=Lockout!!"
+set "password=L0ckout!!"
 
 :: Add user to Administrators group
 net localgroup Administrators %username% /add
