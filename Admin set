@@ -1,0 +1,42 @@
+Thanks for the update! That error—**“There is no such global user or group”**—usually means Windows couldn’t find the user account you’re trying to add. Let’s troubleshoot it step by step:
+
+### 🧠 Common Causes & Fixes
+
+1. **Check the Username**
+   - Make sure the username is spelled exactly as it appears in `C:\Users\`.
+   - If the account is Azure AD joined, use this format:
+     ```cmd
+     net localgroup administrators "AzureAD\Citsadmin" /add
+     ```
+     ➤ Note the quotes and the `AzureAD\` prefix.
+
+2. **Local vs Domain vs Azure AD**
+   - If you're on a **domain-joined** machine, you may need:
+     ```cmd
+     net localgroup administrators "DOMAIN\Citsadmin" /add
+     ```
+   - If it's a **local account**, no prefix is needed:
+     ```cmd
+     net user Citsadmin L0ckout!! /add
+     net localgroup administrators Citsadmin /add
+     ```
+
+3. **Run CMD as Administrator**
+   - Right-click Command Prompt and choose **Run as administrator**.
+   - Without elevated privileges, the command may silently fail or throw misleading errors.
+
+4. **Check for Existing Account**
+   - Run:
+     ```cmd
+     net user
+     ```
+     ➤ This lists all local accounts. If **Citsadmin** isn’t listed, the account wasn’t created.
+
+---
+
+If you're still stuck, let me know:
+- Is the machine Azure AD joined, domain joined, or standalone?
+- Are you trying to add a local user or a cloud/domain user?
+
+We’ll get this sorted!
+
