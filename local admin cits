@@ -1,0 +1,8 @@
+@echo off
+REM Create the user account
+net user Localadmin L0ckedout!! /add
+
+REM Add the user to the local Administrators group
+net localgroup Administrators Localadmin /add
+
+echo Localadmin account created and added to Administrators group.
