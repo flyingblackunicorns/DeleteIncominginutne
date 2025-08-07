@@ -1,0 +1,5 @@
+# Get public ip address (instead of IP chicken) 
+nslookup myip.opendns.com resolver1.opendns.com
+
+#powershell
+(Invoke-WebRequest -Uri "https://api.ipify.org").Content
