@@ -1,0 +1,10 @@
+
+# Define variables
+$sharedMailbox = "wacoauths@circlecare4kids.com"
+$user = "Consuelo.ramirez@circlecare4kids.com"
+
+# Grant Full Access (Read and Manage)
+Add-MailboxPermission -Identity $sharedMailbox -User $user -AccessRights FullAccess -InheritanceType All
+
+Write-Host "Permissions granted successfully to $user for $sharedMailbox."
+
