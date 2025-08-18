@@ -1,0 +1,15 @@
+# Connect to Exchange Online
+Connect-ExchangeOnline
+
+# Define the user
+$user = "dylan.trevino@circlecare4kids.com"
+
+# Get all shared mailboxes where the user has Full Access
+$sharedMailboxes = Get-Mailbox -RecipientTypeDetails SharedMailbox | Where-Object {
+    (Get-MailboxPermission $_.Identity | Where-Object {
+        $_.User -like $user -and $_.AccessRights -contains "FullAccess"
+    })
+}
+
+# Output the results
+$sharedMailboxes | Select Name, PrimarySmtpAddress
